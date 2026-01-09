@@ -4,6 +4,7 @@ package attendance.controller;
 import attendance.domain.service.FileService;
 import attendance.domain.service.MainService;
 import attendance.dto.AttendanceCheckResponse;
+import attendance.dto.AttendanceModifyingResponse;
 import attendance.global.validator.InputValidator;
 import attendance.view.InputView;
 import attendance.view.OutputView;
@@ -43,7 +44,21 @@ public class MainController {
             }
 
             if (function.equals("2")) { // 출석 수정
+                // 닉네임
+                String nickname = inputView.inputModifyingCrewNickname();
+                InputValidator.validateNickname(nickname);
+                mainService.isExist(nickname);
 
+                // 날짜 day
+                String day = inputView.inputModifyingDayOfMonth();
+                InputValidator.validateDate(day);
+
+                //시간 입력 후 검증
+                String time = inputView.inputModifyingTime();
+                InputValidator.validateTime(time);
+
+                AttendanceModifyingResponse attendanceModifyingResponse = mainService.modifyAttendance(nickname, Integer.parseInt(day), time);
+                outputView.outputAttendanceModifying(attendanceModifyingResponse);
             }
 
             if (function.equals("3")) { // 크루별 조회

@@ -1,10 +1,12 @@
 package attendance.domain.service;
 
 import attendance.domain.model.Attendance;
+import attendance.domain.model.AttendanceStatus;
 import attendance.domain.model.Crew;
 import attendance.domain.repository.AttendanceRepository;
 import attendance.domain.repository.CrewRepository;
 import attendance.dto.AttendanceCheckResponse;
+import attendance.dto.AttendanceModifyingResponse;
 import attendance.global.util.Parser;
 import camp.nextstep.edu.missionutils.DateTimes;
 
@@ -12,8 +14,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static attendance.global.exception.ErrorMessage.ALREADY_ATTENDANCE;
-import static attendance.global.exception.ErrorMessage.CREW_NOT_FOUND;
+import static attendance.global.exception.ErrorMessage.*;
 
 public class MainService {
 
@@ -46,8 +47,21 @@ public class MainService {
 
 
     // 출석 수정
-    public void modifyAttendance() {
+    public AttendanceModifyingResponse modifyAttendance(String nickname, int day, String time) {
+        // 닉네임, 날짜day, 시간을 수정
+        Crew crew = crewRepository.findByName(nickname).get();
 
+        // 출석이 있는지 검증
+        Attendance attendance = attendanceRepository.findByCrewAndDayOfMonth(crew, day)
+                .orElseThrow(() -> new IllegalArgumentException(ATTENDANCE_NOT_FOUND.getMessage()));
+
+        LocalTime previousTime = attendance.getTime();
+        AttendanceStatus previousStatus = attendance.getAttendanceStatus();
+
+        LocalTime currentTime = LocalTime.parse(time);
+        attendance.modifyTime(currentTime);
+
+        return AttendanceModifyingResponse.of(attendance.getDate(), previousTime, previousStatus, attendance.getTime(), attendance.getAttendanceStatus());
     }
 
 

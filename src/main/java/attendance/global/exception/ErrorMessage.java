@@ -22,6 +22,7 @@ public enum ErrorMessage {
     INVALID_FUTURE_DATE("[ERROR] 아직 수정할 수 없습니다."),
     INVALID_OPERATING_HOUR("[ERROR] 캠퍼스 운영 시간에만 출석이 가능합니다."),
     ALREADY_ATTENDANCE("[ERROR] 이미 출석을 확인하였습니다. 필요한 경우 수정 기능을 이용해 주세요."),
+    ATTENDANCE_NOT_FOUND("[ERROR] 해당 출석이 존재하지 않습니다."),
 
     INVALID_WEEKDAY_KOREA_NAME("[ERROR] 유효하지 않은 요일");
 

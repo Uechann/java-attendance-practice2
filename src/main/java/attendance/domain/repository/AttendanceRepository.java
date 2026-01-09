@@ -4,10 +4,7 @@ import attendance.domain.model.Attendance;
 import attendance.domain.model.Crew;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AttendanceRepository {
 
@@ -21,5 +18,11 @@ public class AttendanceRepository {
     public boolean isExist(Crew crew, LocalDate localDate) {
         return attendances.get(crew).stream()
                 .anyMatch(attendance -> attendance.isSameDate(localDate));
+    }
+
+    public Optional<Attendance> findByCrewAndDayOfMonth(Crew crew, int day) {
+        return attendances.get(crew).stream()
+                .filter(attendance -> attendance.getDate().getDayOfMonth() == day)
+                .findFirst();
     }
 }

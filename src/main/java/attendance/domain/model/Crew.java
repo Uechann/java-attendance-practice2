@@ -32,6 +32,18 @@ public class Crew {
         }
     }
 
+    public void decreaseAttendanceStatus(AttendanceStatus status) {
+        if (status.equals(AttendanceStatus.ATTENDANCE)) {
+            attendanceCount--;
+        }
+        if (status.equals(AttendanceStatus.LATE)) {
+            lateCount--;
+        }
+        if (status.equals(AttendanceStatus.ABSENCE)) {
+            absenceCount--;
+        }
+    }
+
     public String getName() {
         return name;
     }
