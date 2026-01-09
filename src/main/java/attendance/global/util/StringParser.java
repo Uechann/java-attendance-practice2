@@ -1,0 +1,12 @@
+package attendance.global.util;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class StringParser implements Parser<String> {
+    @Override
+    public List<String> parse(String input, String delimiter) {
+        return Arrays.stream(input.split(delimiter))
+                .toList();
+    }
+}
