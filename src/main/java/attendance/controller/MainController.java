@@ -5,6 +5,7 @@ import attendance.domain.service.FileService;
 import attendance.domain.service.MainService;
 import attendance.dto.AttendanceCheckResponse;
 import attendance.dto.AttendanceModifyingResponse;
+import attendance.dto.CrewAttendancesResponse;
 import attendance.global.validator.InputValidator;
 import attendance.view.InputView;
 import attendance.view.OutputView;
@@ -26,12 +27,11 @@ public class MainController {
 
     public void run() {
         fileService.initializeCrew();
-
-        outputView.outputFunction();
-        String function = inputView.inputFunction();
-        InputValidator.validateFunction(function);
-
         while (true) {
+            outputView.outputFunction();
+            String function = inputView.inputFunction();
+            InputValidator.validateFunction(function);
+
             if (function.equals("1")) { // 출석 확인
                 String nickname = inputView.inputNickname();
                 InputValidator.validateNickname(nickname);
@@ -62,7 +62,11 @@ public class MainController {
             }
 
             if (function.equals("3")) { // 크루별 조회
-
+                String nickname = inputView.inputNickname();
+                InputValidator.validateNickname(nickname);
+                mainService.isExist(nickname);
+                CrewAttendancesResponse attendancesByCrew = mainService.getAttendancesByCrew(nickname);
+                outputView.outputCrewAttendances(attendancesByCrew);
             }
 
             if (function.equals("4")) { // 제적 위험자 조회

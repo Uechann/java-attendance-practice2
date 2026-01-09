@@ -3,6 +3,7 @@ package attendance.view;
 import attendance.domain.model.CustomDayOfWeek;
 import attendance.dto.AttendanceCheckResponse;
 import attendance.dto.AttendanceModifyingResponse;
+import attendance.dto.CrewAttendancesResponse;
 import camp.nextstep.edu.missionutils.DateTimes;
 
 import java.time.LocalDate;
@@ -31,5 +32,9 @@ public class OutputView {
 
     public void outputAttendanceModifying(AttendanceModifyingResponse attendanceModifyingResponse) {
         System.out.println(attendanceModifyingResponse.toString());
+    }
+
+    public void outputCrewAttendances(CrewAttendancesResponse crewAttendancesResponse) {
+        System.out.println(crewAttendancesResponse.toString());
     }
 }

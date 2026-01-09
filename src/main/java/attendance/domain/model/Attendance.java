@@ -31,14 +31,19 @@ public class Attendance {
     // 시간 수정 -> 출석 상태 변경
     public void modifyTime(LocalTime time) {
         this.time = time;
-        this.attendanceStatus = judgeAttendanceStatus(crew, date.getDayOfWeek(), time);
         crew.decreaseAttendanceStatus(attendanceStatus);
-        crew.countAttendanceStatus(attendanceStatus);
+        this.attendanceStatus = judgeAttendanceStatus(crew, date.getDayOfWeek(), time);
     }
 
     private static AttendanceStatus judgeAttendanceStatus(Crew crew, DayOfWeek dayOfWeek, LocalTime localTime) {
         // TODO: 출석 규칙 클래스 분리
         AttendanceStatus status= AttendanceStatus.ATTENDANCE;
+        if (localTime == null) {
+            status = AttendanceStatus.ABSENCE;
+            crew.countAttendanceStatus(status);
+            return status;
+        }
+
         if (dayOfWeek.equals(DayOfWeek.MONDAY)) {
             if (localTime.isAfter(LocalTime.of(13, 5)) && localTime.isBefore(LocalTime.of(13, 30))) {
                 status = AttendanceStatus.LATE;

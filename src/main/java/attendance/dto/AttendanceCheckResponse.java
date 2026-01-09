@@ -11,21 +11,29 @@ public record AttendanceCheckResponse(
         int month,
         int day,
         String dayOfWeek,
-        int hour,
-        int minute,
+        String hour,
+        String minute,
         String status
 ) {
     public static AttendanceCheckResponse of(Attendance attendance) {
         LocalDate date = attendance.getDate();
-        LocalTime time = attendance.getTime();
         String status = attendance.getAttendanceStatus().getName();
         String dayKoreaName = CustomDayOfWeek.getKoreaName(date.getDayOfWeek());
-        return new AttendanceCheckResponse(date.getMonthValue(), date.getDayOfMonth(), dayKoreaName, time.getHour(), time.getMinute(), status);
+        LocalTime time = attendance.getTime();
+
+        String hour = "--";
+        String minute = "--";
+        if (attendance.getTime() != null) {
+            hour = String.format("%02d",time.getHour());
+            minute = String.format("%02d",time.getMinute());
+        }
+
+        return new AttendanceCheckResponse(date.getMonthValue(), date.getDayOfMonth(), dayKoreaName, hour, minute, status);
     }
 
     @Override
     public String toString() {
-        return String.format("%d월 %2d일 %s요일 %02d:%02d (%s)",
+        return String.format("%d월 %02d일 %s요일 %s:%s (%s)",
                 month, day, dayOfWeek, hour, minute, status);
     }
 }

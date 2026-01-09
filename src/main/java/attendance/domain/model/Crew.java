@@ -30,6 +30,8 @@ public class Crew {
         if (status.equals(AttendanceStatus.ABSENCE)) {
             absenceCount++;
         }
+
+        judgeCrewStatus();
     }
 
     public void decreaseAttendanceStatus(AttendanceStatus status) {
@@ -41,6 +43,23 @@ public class Crew {
         }
         if (status.equals(AttendanceStatus.ABSENCE)) {
             absenceCount--;
+        }
+
+        judgeCrewStatus();
+    }
+
+    private void judgeCrewStatus() {
+        int totalAbsenceCount = lateCount / 3 + absenceCount;
+        if (totalAbsenceCount == 2) {
+            crewStatus = CrewStatus.WARNING;
+        }
+
+        if (totalAbsenceCount == 3 || totalAbsenceCount == 4 || totalAbsenceCount == 5) {
+            crewStatus = CrewStatus.INTERVIEW;
+        }
+
+        if (totalAbsenceCount > 5) {
+            crewStatus = CrewStatus.DISMISSAL;
         }
     }
 

@@ -25,4 +25,8 @@ public class AttendanceRepository {
                 .filter(attendance -> attendance.getDate().getDayOfMonth() == day)
                 .findFirst();
     }
+
+    public List<Attendance> findByCrew(Crew crew) {
+        return attendances.get(crew);
+    }
 }

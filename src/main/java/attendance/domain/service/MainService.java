@@ -7,11 +7,15 @@ import attendance.domain.repository.AttendanceRepository;
 import attendance.domain.repository.CrewRepository;
 import attendance.dto.AttendanceCheckResponse;
 import attendance.dto.AttendanceModifyingResponse;
+import attendance.dto.CrewAttendancesResponse;
 import attendance.global.util.Parser;
 import camp.nextstep.edu.missionutils.DateTimes;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static attendance.global.exception.ErrorMessage.*;
@@ -66,8 +70,25 @@ public class MainService {
 
 
     // 크루별 출석 확인
-    public void getAttendancesByCrew() {
+    public CrewAttendancesResponse getAttendancesByCrew(String nickname) {
+        Crew crew = crewRepository.findByName(nickname).get();
 
+        int todayDatOfMonth = DateTimes.now().getDayOfMonth();
+        List<AttendanceCheckResponse> attendanceCheckResponses = new ArrayList<>();
+        for (int i = 1; i < todayDatOfMonth; i++) {
+            LocalDate localDate = LocalDate.of(2024, 12, i);
+            DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+            if (dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
+                continue;
+            }
+
+            Attendance attendance = attendanceRepository.findByCrewAndDayOfMonth(crew, i)
+                    .orElseGet(() -> Attendance.of(crew, localDate, null));
+
+            attendanceCheckResponses.add(AttendanceCheckResponse.of(attendance));
+        }
+
+        return CrewAttendancesResponse.of(attendanceCheckResponses, crew);
     }
 
 
