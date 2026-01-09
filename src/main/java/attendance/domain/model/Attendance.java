@@ -67,4 +67,8 @@ public class Attendance {
     public AttendanceStatus getAttendanceStatus() {
         return attendanceStatus;
     }
+
+    public boolean isSameDate(LocalDate localDate) {
+        return date.equals(localDate);
+    }
 }

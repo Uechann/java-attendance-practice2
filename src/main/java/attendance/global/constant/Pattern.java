@@ -26,5 +26,8 @@ public class Pattern {
 
     public static final String ORDER_MENU_AND_QUANTITY = "^(" +MENU_QUANTITY + ")" + "(," + MENU_QUANTITY + ")*$";
 
+    public static final String CREW_NAME = "^[가-힣]+$";
+    public static final String FUNCTION = "^[1234Q]$";
+
 
 }

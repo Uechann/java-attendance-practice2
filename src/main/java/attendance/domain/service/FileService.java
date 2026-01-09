@@ -36,6 +36,7 @@ public class FileService {
                 String name = nameAndDateTime.get(0);
                 Crew crew = crewRepository.findByName(name)
                         .orElseGet(() -> Crew.of(name));
+                crewRepository.save(crew);
 
                 String dateTime = nameAndDateTime.get(1);
                 List<String> dateAndTime = stringParser.parse(dateTime, " ");

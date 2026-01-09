@@ -6,8 +6,32 @@ public class InputView {
 
     public InputView() {}
 
-    public String input() {
-        System.out.println("");
+    public String inputFunction() {
+        return Console.readLine();
+    }
+
+    public String inputNickname() {
+        System.out.println("닉네임을 입력해 주세요.");
+        return Console.readLine();
+    }
+
+    public String inputTime() {
+        System.out.println("등교 시간을 입력해 주세요.");
+        return Console.readLine();
+    }
+
+    public String inputModifyingCrewNickname() {
+        System.out.println("출석을 수정하려는 크루의 닉네임을 입력해 주세요.");
+        return Console.readLine();
+    }
+
+    public String inputModifyingDayOfMonth() {
+        System.out.println("수정하려는 날짜(일)를 입력해 주세요.");
+        return Console.readLine();
+    }
+
+    public String inputModifyingTime() {
+        System.out.println("언제로 변경하겠습니까?");
         return Console.readLine();
     }
 }

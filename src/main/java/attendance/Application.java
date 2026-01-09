@@ -1,7 +1,12 @@
 package attendance;
 
+import attendance.controller.MainController;
+import attendance.global.config.DIConfig;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        DIConfig config = new DIConfig();
+        MainController mainController = config.mainController();
+        mainController.run();
     }
 }

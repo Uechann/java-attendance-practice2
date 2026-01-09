@@ -4,7 +4,6 @@ import java.time.DayOfWeek;
 import java.util.Arrays;
 
 import static attendance.global.exception.ErrorMessage.INVALID_WEEKDAY_KOREA_NAME;
-import static attendance.global.exception.ErrorMessage.WEEKDAY_NOT_FOUND;
 
 public enum CustomDayOfWeek {
 
@@ -51,7 +50,7 @@ public enum CustomDayOfWeek {
         return Arrays.stream(CustomDayOfWeek.values())
                 .filter(customDayOfWeek -> customDayOfWeek.getDayOfWeek().equals(dayOfWeek.plus(1)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(WEEKDAY_NOT_FOUND.getMessage()));
+                .get();
     }
 }
 

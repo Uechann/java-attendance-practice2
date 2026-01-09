@@ -3,6 +3,7 @@ package attendance.domain.repository;
 import attendance.domain.model.Attendance;
 import attendance.domain.model.Crew;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,5 +16,10 @@ public class AttendanceRepository {
     public Attendance save(Attendance attendance) {
         attendances.computeIfAbsent(attendance.getCrew(), crew -> new ArrayList<>()).add(attendance);
         return attendance;
+    }
+
+    public boolean isExist(Crew crew, LocalDate localDate) {
+        return attendances.get(crew).stream()
+                .anyMatch(attendance -> attendance.isSameDate(localDate));
     }
 }

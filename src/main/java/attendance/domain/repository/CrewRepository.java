@@ -18,4 +18,8 @@ public class CrewRepository {
     public Optional<Crew> findByName(String crewName) {
         return Optional.ofNullable(crewMap.get(crewName));
     }
+
+    public boolean isExist(String crewName) {
+        return crewMap.containsKey(crewName);
+    }
 }
